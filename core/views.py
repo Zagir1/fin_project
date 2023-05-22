@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core import models, forms
+from core.models import News
 
 
 # Create your views here.
@@ -57,23 +58,23 @@ class NewsDelete(TitleMixin, DeleteView):
 
 
 class DiscussionList(TitleMixin, ListView):
-    model = models.News
+    model = models.Discussion
     template_name = 'core/discussion_page.html'
     context_object_name = 'discussion_page'
     title = 'Обсуждения'
 
 
 class DiscussionCreate(TitleMixin, CreateView):
-    model = models.News
+    model = models.Discussion
     template_name = 'core/discussion_create.html'
     context_object_name = 'discussion_create'
-    form_class = forms.NewsForm
+    form_class = forms.DiscussionForm
     success_url = reverse_lazy('core:discussion_page')
     title = "Добавление нового обсуждения"
 
 
 class DiscussionDelete(TitleMixin, DeleteView):
-    model = models.News
+    model = models.Discussion
     template_name = 'core/discussion_delete.html'
     context_object_name = 'discussion_delete'
     success_url = reverse_lazy('core:discussion_page')
