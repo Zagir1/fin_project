@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core import models, forms
-from core.models import News
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -31,7 +32,7 @@ class NewsDetail(TitleMixin, DetailView):
     title = "Новость"
 
 
-class NewsCreate(TitleMixin, CreateView):
+class NewsCreate(TitleMixin, LoginRequiredMixin, CreateView):
     model = models.News
     template_name = 'core/news_create.html'
     context_object_name = 'news_create'
@@ -40,7 +41,7 @@ class NewsCreate(TitleMixin, CreateView):
     title = "Добавление новости"
 
 
-class NewsUpdate(TitleMixin, UpdateView):
+class NewsUpdate(TitleMixin, LoginRequiredMixin, UpdateView):
     model = models.News
     template_name = 'core/news_update.html'
     context_object_name = 'news_update'
@@ -48,13 +49,29 @@ class NewsUpdate(TitleMixin, UpdateView):
     success_url = reverse_lazy('core:home_page')
     title = "Редактирование новости"
 
+#    def form_valid(self, form):
+#        messages.success(self.request, "Новость была обновлена успешно")
+#        return super(NewsUpdate, self).form_valid(form)
 
-class NewsDelete(TitleMixin, DeleteView):
+#    def get_queryset(self):
+#        base_qs = super(NewsUpdate, self).get_queryset()
+#        return base_qs.filter(superuser=self.request.superuser)
+
+
+class NewsDelete(TitleMixin, LoginRequiredMixin, DeleteView):
     model = models.News
     template_name = 'core/news_delete.html'
     context_object_name = 'news_delete'
     success_url = reverse_lazy('core:home_page')
     title = "Удаление новости"
+
+#    def form_valid(self, form):
+#        messages.success(self.request, "Новость была удалена успешно")
+#        return super(NewsDelete, self).form_valid(form)
+
+#    def get_queryset(self):
+#        base_qs = super(NewsDelete, self).get_queryset()
+#        return base_qs.filter(user=self.request.user)
 
 
 class DiscussionList(TitleMixin, ListView):
@@ -64,7 +81,7 @@ class DiscussionList(TitleMixin, ListView):
     title = 'Обсуждения'
 
 
-class DiscussionCreate(TitleMixin, CreateView):
+class DiscussionCreate(TitleMixin, LoginRequiredMixin, CreateView):
     model = models.Discussion
     template_name = 'core/discussion_create.html'
     context_object_name = 'discussion_create'
@@ -73,9 +90,17 @@ class DiscussionCreate(TitleMixin, CreateView):
     title = "Добавление нового обсуждения"
 
 
-class DiscussionDelete(TitleMixin, DeleteView):
+class DiscussionDelete(TitleMixin, LoginRequiredMixin, DeleteView):
     model = models.Discussion
     template_name = 'core/discussion_delete.html'
     context_object_name = 'discussion_delete'
     success_url = reverse_lazy('core:discussion_page')
     title = "Удаление обсуждения"
+
+#    def form_valid(self, form):
+#        messages.success(self.request, "Обсуждение было удалено успешно")
+#        return super(DiscussionDelete, self).form_valid(form)
+
+#    def get_queryset(self):
+#        base_qs = super(DiscussionDelete, self).get_queryset()
+#        return base_qs.filter(superuser=self.request.superuser)

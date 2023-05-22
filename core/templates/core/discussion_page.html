@@ -23,22 +23,18 @@
       {% for discussion in discussion %}
         <tr>
           <td>{{discussion.id}}</td>
-          <td>{{discussion.title}}</td>
+          <td>{{discussion.username}}</td>
           <td>
           {% for topic in discussion.topic.all %}
             {{ topic }}
           {% endfor %}
           </td>
-          <td>{{news.topic}}</td>
-          <td>{{news.summary}}</td>
-          <td>{{news.picture}}</td>
-          <td>{{news.auth_opinion}}</td>
-          <td>{{news.author}}</td>
-          <td>{{news.source}}</td>
-          <td>{{news.d_created}}</td>
-          <td>{{news.active}}</td>
-          <td><a href="{% url 'core:news_update' pk=news.pk %}">Обновить</a></td>
-          <td><a href="{% url 'core:news_delete' pk=news.pk %}">Удалить</a></td>
+          <td>{{discussion.d_title}}</td>
+          <td>{{discussion.branch}}</td>
+          <td>{{discussion.picture}}</td>
+          <td>{{discussion.created_d}}</td>
+          <td><a href="{% url 'core:discussion_update' pk=news.pk %}">Обновить</a></td>
+          <td><a href="{% url 'core:discussion_delete' pk=news.pk %}">Удалить</a></td>
         </tr>
       {% empty %}
         <tr>
