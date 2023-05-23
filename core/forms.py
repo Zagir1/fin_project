@@ -31,7 +31,6 @@ class DiscussionForm(ModelForm):
     d_title = forms.CharField(label="Название обсуждения", required=False)
     branch = forms.CharField(widget=forms.Textarea, label="Изложение сути вопроса", required=False)
     picture = forms.FileField(label="Картинка для обсуждения", required=False)
-    created_d = forms.DateTimeField(label="Дата и время публикации", required=True)
 
     class Meta:
         model = Discussion
